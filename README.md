@@ -1,75 +1,109 @@
-# BodyScan App: AI for Medical Imaging
+# BodyScan App: AI-Powered Medical Imaging Diagnostics
 
-The **BodyScan App** is a comprehensive medical imaging application designed to assist in the preliminary diagnosis of several critical conditions using deep learning models. The project integrates multiple specialized AI models into a unified system, providing a robust tool for analyzing medical scans such as X-rays and MRIs.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
+[![Java](https://img.shields.io/badge/Java-11%2B-orange.svg)](https://www.oracle.com/java/)
 
-## Key Features
+The **BodyScan App** is a professional-grade medical imaging application designed to assist healthcare professionals in the preliminary diagnosis of critical conditions. By leveraging state-of-the-art deep learning models, the application provides a unified interface for analyzing various types of medical scans, including X-rays and MRIs.
 
-The application is modular, featuring four distinct AI-powered detection modules, each focused on a specific medical condition:
+---
 
-| Module | Purpose | AI Model Files |
+## 🌟 Key Features
+
+The application is built with a modular architecture, supporting four specialized diagnostic modules:
+
+| Module | Diagnostic Focus | Modality |
 | :--- | :--- | :--- |
-| **Chest X-ray Analysis** | Detects the presence of **Pneumonia** from chest X-ray images. | `chestxray.ipynb`, `api_chest.py` |
-| **Brain Tumor Detection** | Identifies potential **brain tumors** from MRI or CT scans. | `brain-tumor-detection.ipynb`, `brain_api.py` |
-| **Diabetic Retinopathy** | Analyzes retinal images to detect signs of **diabetic retinopathy**. | `diabetic.ipynb`, `diabetic.py` |
-| **Fracture Detection** | Determines the presence of **bone fractures** in X-ray images. | `fracture or not.ipynb`, `fracture_api.py` |
+| **Chest X-ray** | Pneumonia Detection | X-ray |
+| **Brain Tumor** | Tumor Identification | MRI/CT |
+| **Diabetic Retinopathy** | Retinal Analysis | Fundus Photography |
+| **Fracture Detection** | Bone Fracture Identification | X-ray |
 
-## Architecture
+---
 
-The BodyScan App employs a client-server architecture, separating the user interface from the heavy-lifting AI processing:
+## 🏗️ System Architecture
 
-1.  **Frontend Application (Client):** The user interface is built using **Java** (as indicated by the `.java` source files in the `src/` directory). This application handles user interaction, image selection, and displays the final results.
-2.  **AI Backend (Server):** The core AI logic is exposed via a RESTful API built with **Python** and the **Flask** framework. Each detection module has its own dedicated API endpoint (e.g., `/predict` in `api_chest.py`) that handles image processing and model inference.
-3.  **Deep Learning Models:** The models are implemented using **Keras/TensorFlow** and are loaded from `.h5` files. They are responsible for analyzing the input image and returning a prediction score and label.
+The project follows a modern **Client-Server Architecture** to ensure scalability and separation of concerns:
 
-## Project Structure
+1.  **Frontend (Java/JavaFX):** A cross-platform desktop application that provides an intuitive user interface for image uploading and result visualization.
+2.  **Backend (Python/Flask):** A RESTful API service that handles complex image processing and deep learning inference using TensorFlow/Keras.
+3.  **AI Engine:** Pre-trained Convolutional Neural Networks (CNNs) optimized for medical image classification.
 
-The repository is organized to separate the application code, AI models, and documentation:
+---
 
-| Directory/File | Description |
-| :--- | :--- |
-| `src/` | Contains the **Java source code** for the frontend application (e.g., `Main.java`, `ChestXRay.java`, `BrainTumorPage.java`). |
-| `AI Models/` | Main directory for all AI-related assets. |
-| `AI Models/APIs/` | Contains the **Python Flask API scripts** (`*.py`) for each detection module. |
-| `AI Models/*.ipynb` | Contains the **Jupyter Notebooks** used for model training, experimentation, and data analysis for each module. |
-| `presentation/` | Contains the project's final presentation, *BodyScan AI for Medical Imaging.pdf*. |
-| `.project`, `.classpath` | Configuration files suggesting the use of an **Eclipse IDE** for the Java frontend development. |
+## 📂 Project Structure
 
-## Setup and Usage
-
-Setting up the BodyScan App requires configuring both the Python AI backend and the Java frontend.
-
-### 1. AI Backend Setup (Python/Flask)
-
-The backend must be running to serve predictions to the Java application.
-
-**Prerequisites:**
-*   Python 3.x
-*   Pip
-
-**Installation:**
-You will need to install the necessary Python libraries, including Flask, Keras, and TensorFlow.
-
-```bash
-pip install flask numpy pillow tensorflow keras
+```text
+BodyScan_App/
+├── ai_models/          # Python Backend & AI Models
+│   ├── app.py          # Unified Flask API Service
+│   ├── requirements.txt # Python Dependencies
+│   └── APIs/           # Legacy individual API scripts
+├── src/                # Java Frontend Source Code
+│   └── BodyScan/       # JavaFX Application Logic
+├── presentation/       # Project Documentation & Slides
+├── .gitignore          # Git exclusion rules
+└── README.md           # Project Documentation
 ```
 
-**Running the API:**
-Each API file (`api_chest.py`, `brain_api.py`, etc.) needs to be run separately or integrated into a single service gateway.
+---
+
+## 🚀 Getting Started
+
+### 1. Backend Setup (Python)
+
+Ensure you have Python 3.8+ installed.
 
 ```bash
-# Example: Running the Chest X-ray API
-python "AI Models/APIs/api_chest.py"
+# Navigate to the backend directory
+cd ai_models
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Start the API service
+python app.py
 ```
 
-### 2. Frontend Application Setup (Java)
+The backend will be available at `http://localhost:5000`. You can check the health status at `http://localhost:5000/health`.
 
-The frontend is a Java application that communicates with the running Python APIs.
+### 2. Frontend Setup (Java)
 
 **Prerequisites:**
-*   Java Development Kit (JDK)
-*   An IDE like Eclipse (recommended due to project files)
+- Java Development Kit (JDK) 11 or higher.
+- JavaFX SDK.
 
-**Steps:**
-1.  Import the project into your Java IDE (e.g., Eclipse) using the provided `.project` and `.classpath` files.
-2.  Ensure the application is configured to correctly call the local endpoints exposed by the Flask APIs.
-3.  Run the `Main.java` file to launch the application interface.
+**Running the App:**
+1. Import the project into your preferred IDE (IntelliJ IDEA, Eclipse, or VS Code).
+2. Ensure the JavaFX libraries are added to your project's build path.
+3. Run `src/BodyScan/Main.java`.
+
+---
+
+## 🛠️ API Documentation
+
+The backend exposes a unified endpoint for all diagnostic modules:
+
+- **Endpoint:** `POST /predict/<model_type>`
+- **URL Parameters:** `model_type` (one of: `chest`, `brain`, `diabetic`, `fracture`)
+- **Body:** `multipart/form-data` with a `file` field containing the image.
+
+**Example Response:**
+```json
+{
+  "model": "chest",
+  "prediction": "Pneumonia",
+  "confidence": 98.5,
+  "raw_score": 0.985
+}
+```
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
